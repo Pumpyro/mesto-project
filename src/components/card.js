@@ -11,4 +11,4 @@ export default function createCard(link, title) {
     cardImage.alt = title;
   
     return cardElement;
-  }
+}

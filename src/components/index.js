@@ -1,44 +1,41 @@
 import '../pages/index.css';
-
 import createCard from './card.js'
 import { enableValidation, checkValidation} from './validate.js'
 import { openModal, closeModal } from './modal.js'
 import { initialCards } from './initialCards.js'
 
 
-//// DOM-узлы ////
 
 
-// Данные пользователя
+// user data
 const profileTitle = document.querySelector('.profile__title')
 const profileDescription = document.querySelector('.profile__description')
 
-// Список карточек
+// cards list
 const placesList = document.querySelector('.places__list')
 
-// Поп-апы
+// popups
 const profileFormPopup = document.querySelector('.popup_type_edit')
 const cardFormPopup = document.querySelector('.popup_type_new-card')
 const imagePopup = document.querySelector('.popup_type_image')
 
-// Элементы поп-апа картинки
+// popup elements
 const image = imagePopup.querySelector('.popup__image')
 const caption = imagePopup.querySelector('.popup__caption')
 
-// Добавление анимации поп-апам
+// animating popups
 profileFormPopup.classList.add('popup_is-animated')
 cardFormPopup.classList.add('popup_is-animated')
 imagePopup.classList.add('popup_is-animated')
 
-// Кнопки вызова поп-апов
+// popup buttons
 const profileEditButton = document.querySelector('.profile__edit-button')
 const addCardButton = document.querySelector('.profile__add-button')
 
 
-//// Функции ////
 
 
-// Обработчик нажатия на карточку
+// cards
 placesList.addEventListener('click', event => {
   if (event.target.classList.contains('card__image')) {
     image.src = ""
@@ -52,7 +49,6 @@ placesList.addEventListener('click', event => {
   }
 })
 
-// Вывод заготовленных карточек на страницу
 initialCards.forEach(cardInfo => {
   const link = cardInfo['link']
   const name = cardInfo['name']
@@ -61,9 +57,8 @@ initialCards.forEach(cardInfo => {
 })
 
 
-//// Обработка поп-апов ////
+// popups
 
-// Обработка поп-апа изменения профиля
 const profileFormElement = profileFormPopup.querySelector('.popup__form')
 
 const nameInput = profileFormElement.querySelector('.popup__input_type_name')
@@ -80,9 +75,8 @@ profileEditButton.addEventListener('click', event => {
   openModal(profileFormPopup)
 })
 
-// Обработчик «отправки» формы
 function handleProfileFormSubmit(evt) {
-  evt.preventDefault() // Эта строчка отменяет стандартную отправку формы.
+  evt.preventDefault() 
 
   profileTitle.textContent = nameInput.value
   profileDescription.textContent = jobInput.value
@@ -90,11 +84,9 @@ function handleProfileFormSubmit(evt) {
   closeModal(profileFormPopup)
 }
 
-// Прикрепление обработчика к форме
 profileFormElement.addEventListener('submit', handleProfileFormSubmit)
 
 
-// Обработка поп-апа создания карточки
 const cardFormElement = cardFormPopup.querySelector('.popup__form')
 
 const titleInput = cardFormElement.querySelector('.popup__input_type_card-name')
@@ -109,20 +101,18 @@ addCardButton.addEventListener('click', () => {
   openModal(cardFormPopup)
 })
 
-// Обработчик «отправки» формы
 function handleCardFormSubmit(evt) {
-  evt.preventDefault() // Эта строчка отменяет стандартную отправку формы.
+  evt.preventDefault()
 
   placesList.prepend(createCard(linkInput.value, titleInput.value))
 
   closeModal(cardFormPopup)
 }
 
-// Прикрепление обработчика к форме
 cardFormElement.addEventListener('submit', handleCardFormSubmit)
 
 
-// Создание объекта с настройками валидации
+// validation
 const validationSettings = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -132,6 +122,4 @@ const validationSettings = {
   errorClass: 'popup__error_visible'
 }
 
-// включение валидации вызовом enableValidation
-// все настройки передаются при вызове
 enableValidation(validationSettings)
