@@ -1,6 +1,10 @@
 import "../pages/index.css";
 import { createCard, updateCardLikes } from "./card.js";
-import { enableValidation, checkValidation } from "./validate.js";
+import {
+  resetFormValidation,
+  enableValidation,
+  checkValidation,
+} from "./validate.js";
 import { openModal, closeModal } from "./modal.js";
 
 import {
@@ -203,7 +207,7 @@ addCardButton.addEventListener("click", () => {
   cardLinkInput.value = "";
   cardNameInput.value = "";
 
-  checkValidation(cardFormElement, validationSettings);
+  resetFormValidation(cardFormElement, validationSettings);
   openModal(cardFormPopup);
 });
 
@@ -211,6 +215,7 @@ function handleCardFormSubmit(evt) {
   evt.preventDefault();
 
   cardFormButton.textContent = "Создаем...";
+  cardFormButton.classList.add(validationSettings.inactiveButtonClass);
   const body = {
     name: cardNameInput.value,
     link: cardLinkInput.value,
