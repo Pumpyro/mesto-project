@@ -236,6 +236,7 @@ function handleCardFormSubmit(evt) {
     })
     .finally(() => {
       cardFormButton.textContent = "Создать";
+      cardFormButton.classList.remove(validationSettings.inactiveButtonClass);
     });
 }
 
